@@ -25,15 +25,17 @@ class CameraStreamPlugin(octoprint.plugin.StartupPlugin,
 		return buffer.tobytes();
 
 	def _stream_as_bytes(self):
-		while(True):
+		while True:
 			self._logger.info("Streaming");
-			yield b"--frame\r\nContent-Type: image/jpeg\r\n\r\n" + self._snapshot_as_bytes(self) + b"\r\n";
 			time.sleep(1.0 / fps);
+			self._logger.info("Still here!");
+			yield (b"--frame\r\n" + b"Content-Type: image/jpeg\r\n\r\n" + self._snapshot_as_bytes(self) + b"\r\n");
 			self._logger.info("Streamed");
 	
 	@octoprint.plugin.BlueprintPlugin.route("/stream", methods = ["GET"])
 	def stream_handler(self):
-		response = flask.Response(self._stream_as_bytes(), mimetype="multipart/x-mixed-replace; boundary=frame");
+		response = flask.Response(self._stream_as_bytes(),
+					  mimetype="multipart/x-mixed-replace; boundary=--frame");
 		return response;
 
 	@octoprint.plugin.BlueprintPlugin.route("/snapshot", methods = ["GET"])
