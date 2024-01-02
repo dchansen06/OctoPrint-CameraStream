@@ -5,8 +5,6 @@ import cv2;
 import multiprocessing;
 import time;
 
-__plugin_version__ = "0.0.3";
-
 class CameraStreamPlugin(octoprint.plugin.StartupPlugin,
 			octoprint.plugin.SimpleApiPlugin,
 			octoprint.plugin.WebcamProviderPlugin):
