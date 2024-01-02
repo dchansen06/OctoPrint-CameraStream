@@ -26,8 +26,9 @@ class CameraStreamPlugin(octoprint.plugin.StartupPlugin,
 		return buffer.tobytes();
 
 	def _stream_as_bytes(self):
+		self._logger.info("Stream shot");
 		yield b"--frame\r\nContent-Type: image/jpeg\r\n\r\n";
-		yield _snapshot_as_bytes(self);
+		yield self._snapshot_as_bytes(self);
 		yield b"\r\n";
 
 	def on_after_startup(self):
