@@ -26,11 +26,10 @@ class CameraStreamPlugin(octoprint.plugin.StartupPlugin,
 
 	def _stream_as_bytes(self):
 		while(True):
-			self._logger.info("Stream shot");
-			yield b"--frame\r\nContent-Type: image/jpeg\r\n\r\n"
-			yield self._snapshot_as_bytes(self);
-			yield b"\r\n";
+			self._logger.info("Streaming");
+			yield b"--frame\r\nContent-Type: image/jpeg\r\n\r\n" + self._snapshot_as_bytes(self) + b"\r\n";
 			time.sleep(1.0 / fps);
+			self._logger.info("Streamed");
 	
 	@octoprint.plugin.BlueprintPlugin.route("/stream", methods = ["GET"])
 	def stream_handler(self):
