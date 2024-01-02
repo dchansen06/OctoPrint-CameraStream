@@ -38,7 +38,7 @@ class CameraStreamPlugin(octoprint.plugin.StartupPlugin,
 		return response
 
 	@octoprint.plugin.BlueprintPlugin.route("/snapshot", methods = ["GET"])
-	def snapshot_handler(self):
+	def snapshot_handler(self, reqest):
 		self._logger.info(request.args);
 		response = flask.make_response(self._snapshot_as_bytes());
 		response.headers["Content-Type"] = "image/jpg";
@@ -46,10 +46,11 @@ class CameraStreamPlugin(octoprint.plugin.StartupPlugin,
 			response.headers["Reload"] = 1 / self.fps;
 		return response;
 
+	def is_blueprint_csrf_protected():
+		return True;
+				
 	def on_after_startup(self):
 		self._logger.info("Configuring camera stream");
-
-		self._logger.info("Did stuff");
 		self.vid.set(cv2.CAP_PROP_BUFFERSIZE, 1);
 		self.vid.set(cv2.CAP_PROP_FRAME_WIDTH, 640);
 		self.vid.set(cv2.CAP_PROP_FRAME_HEIGHT, 480);
@@ -65,8 +66,8 @@ class CameraStreamPlugin(octoprint.plugin.StartupPlugin,
 				canSnapshot = True,
 				snapshot = "Internal Camera Stream",
 				compat = WebcamCompatibility(
-					snapshot = "/api/plugin/camerastream?snapshot",
-					stream = "/api/plugin/camerastream?stream",
+					snapshot = "/plugin/camerastream/snapshot",
+					stream = "/plugin/camerastream/stream",
 				)
 			)
 		]
