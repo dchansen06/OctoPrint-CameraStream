@@ -25,14 +25,6 @@ class CameraStreamPlugin(octoprint.plugin.StartupPlugin,
 			return bytes("Cannot convert", "utf-8");
 		return buffer.tobytes();
 
-	def _stream_as_bytes(self):
-		self._logger.info("Stream");
-		while True:
-			time.sleep(1.0 / self.fps);
-			self._logger.info("Got snap");
-			bytes = self._snapshot_as_bytes();
-			yield(b"--frame\r\nContent-Type: image/jpeg\r\n\r\nContent-Length: " + str(len(bytes)).encode() + b"\r\n\r\n" + bytes + b"\r\n");
-
 	def on_after_startup(self):
 		self._logger.info("Configuring camera stream");
 
@@ -51,7 +43,9 @@ class CameraStreamPlugin(octoprint.plugin.StartupPlugin,
 	def on_api_get(self, request):
 		self._logger.info(request.args);
 		if "stream" in request.args or "mjpg" in request.args:
-			response = flask.Response(self._stream_as_bytes(), mimetype = "multipart/x-mixed-replace; boundary=frame");
+			response = flask.make_response(self._snapshot_as_bytes());
+			response.headers["Content-Type"] = "image/jpg";
+			response.headers["Refresh"] = 1 / self.fps;
 		elif "snapshot" in request.args or "jpg" in request.args:
 			response = flask.make_response(self._snapshot_as_bytes());
 			response.headers["Content-Type"] = "image/jpg";
