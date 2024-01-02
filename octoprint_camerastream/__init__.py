@@ -5,6 +5,8 @@ import cv2;
 import multiprocessing;
 import time;
 
+__plugin_version__ = "0.0.3";
+
 class CameraStreamPlugin(octoprint.plugin.StartupPlugin,
 			octoprint.plugin.SimpleApiPlugin,
 			octoprint.plugin.WebcamProviderPlugin):
@@ -26,8 +28,10 @@ class CameraStreamPlugin(octoprint.plugin.StartupPlugin,
 		return buffer.tobytes();
 
 	def _stream_as_bytes(self):
+		self._logger.info("Stream");
 		while True:
 			time.sleep(1.0 / self.fps);
+			self._logger.info("Got snap");
 			yield(b"--frame\r\nContent-Type: image/jpeg\r\n\r\n" + _snapshot_as_bytes() + b"\r\n");
 
 	def on_after_startup(self):
