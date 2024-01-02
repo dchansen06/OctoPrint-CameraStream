@@ -44,9 +44,12 @@ class CameraStreamPlugin(octoprint.plugin.StartupPlugin,
 		if "stream" in request.args or "mjpg" in request.args:
 			response = flask.make_response(b"--frame\r\n" b"Content-Type: image/jpeg\r\n\r\n" + self._snapshot_as_bytes() + b"\r\n");
 			response.headers["Content-Type"] = "multipart/x-mixed-replace; boundary=frame";
-		else:
+		elif "snapshot" in request.args or "jpg" in request.args:
 			response = flask.make_response(self._snapshot_as_bytes());
 			response.headers["Content-Type"] = "image/jpg";
+		else:
+			response = flask.make_response("Invalid query");
+			response.headers["Content-Type"] = "text/plain";
 		return response;
 
 	def get_webcam_configurations(self):
@@ -57,8 +60,8 @@ class CameraStreamPlugin(octoprint.plugin.StartupPlugin,
 				canSnapshot = True,
 				snapshot = "Internal Camera Stream",
 				compat = WebcamCompatibility(
-					snapshot = "/plugin/camerastream?snapshot", # Could ignore query
-					stream = "/plugin/camerastream?stream", #broken
+					snapshot = "/api/plugin/camerastream?snapshot",
+					stream = "/api/plugin/camerastream?stream",
 				)
 			)
 		]
