@@ -46,7 +46,7 @@ class CameraStreamPlugin(octoprint.plugin.StartupPlugin,
 	def on_api_get(self, request):
 		self._logger.info(request.args);
 		if "stream" in request.args or "mjpg" in request.args:
-			response = flask.make_response(self._stream_as_bytes);
+			response = flask.make_response(self._stream_as_bytes());
 			response.headers["Content-Type"] = "multipart/x-mixed-replace; boundary=frame";
 		elif "snapshot" in request.args or "jpg" in request.args:
 			response = flask.make_response(self._snapshot_as_bytes());
