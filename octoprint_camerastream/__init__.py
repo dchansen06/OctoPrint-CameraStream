@@ -32,7 +32,7 @@ class CameraStreamPlugin(octoprint.plugin.StartupPlugin,
 		while True:
 			time.sleep(1.0 / self.fps);
 			self._logger.info("Got snap");
-			yield(b"--frame\r\nContent-Type: image/jpeg\r\n\r\n" + _snapshot_as_bytes() + b"\r\n");
+			yield(b"--frame\r\nContent-Type: image/jpeg\r\n\r\n" + self._snapshot_as_bytes() + b"\r\n");
 
 	def on_after_startup(self):
 		self._logger.info("Configuring camera stream");
