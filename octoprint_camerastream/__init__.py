@@ -38,7 +38,7 @@ class CameraStreamPlugin(octoprint.plugin.StartupPlugin,
 		return response
 
 	@octoprint.plugin.BlueprintPlugin.route("/snapshot", methods = ["GET"])
-	def snapshot_handler(self, reqest):
+	def snapshot_handler(self):
 		self._logger.info(request.args);
 		response = flask.make_response(self._snapshot_as_bytes());
 		response.headers["Content-Type"] = "image/jpg";
