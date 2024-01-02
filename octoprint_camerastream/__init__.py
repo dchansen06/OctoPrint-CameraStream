@@ -1,13 +1,13 @@
 import octoprint.plugin;
-import octoprint.schema.webcam;
+from octoprint.schema.webcam import Webcam, WebcamCompatibility;
 import flask;
 import cv2;
 import multiprocessing;
 import time;
 
 class CameraStreamPlugin(octoprint.plugin.StartupPlugin,
-						octoprint.plugin.SimpleApiPlugin,
-						octoprint.plugin.WebcamProviderPlugin):
+			octoprint.plugin.SimpleApiPlugin,
+			octoprint.plugin.WebcamProviderPlugin):
 
 	vid = cv2.VideoCapture(0);
 
@@ -47,13 +47,14 @@ class CameraStreamPlugin(octoprint.plugin.StartupPlugin,
 
 	def get_webcam_configurations(self):
 		return [
-			octoprint.schema.webcam.Webcam(
+			Webcam(
 				name = "camerastream",
 				displayName = "Camera Stream",
 				canSnapshot = True,
 				snapshot = "Internal Camera Stream",
-				compat = octoprint.schema.webcam.WebcamCompatibility(
+				compat = WebcamCompatibility(
 					snapshot = "/plugin/camerastream?snapshot",
+					stream = "/plugin/camerastream?stream", #broken
 				)
 			)
 		]
