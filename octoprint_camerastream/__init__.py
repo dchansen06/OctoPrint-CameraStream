@@ -10,7 +10,7 @@ class CameraStreamPlugin(octoprint.plugin.StartupPlugin,
 			octoprint.plugin.WebcamProviderPlugin):
 
 	vid = cv2.VideoCapture(0);
-	fps = 5;
+	fps = 1;
 
 	def _snapshot_as_bytes(self):
 		self._logger.info("Snapshotting");
@@ -30,7 +30,8 @@ class CameraStreamPlugin(octoprint.plugin.StartupPlugin,
 		while True:
 			time.sleep(1.0 / self.fps);
 			self._logger.info("Got snap");
-			yield(b"--frame\r\nContent-Type: image/jpeg\r\n\r\n" + self._snapshot_as_bytes() + b"\r\n");
+			bytes = self._snapshot_as_bytes();
+			yield(b"--frame\r\nContent-Type: image/jpeg\r\n\r\nContent-Length: " + str(len(bytes)).encode() + b"\r\n\r\n" + bytes + b"\r\n");
 
 	def on_after_startup(self):
 		self._logger.info("Configuring camera stream");
@@ -50,7 +51,7 @@ class CameraStreamPlugin(octoprint.plugin.StartupPlugin,
 	def on_api_get(self, request):
 		self._logger.info(request.args);
 		if "stream" in request.args or "mjpg" in request.args:
-			response = flask.Response(self._stream_as_bytes(), mimetype = "multipart/x-mixed-replace; boundary=--frame");
+			response = flask.Response(self._stream_as_bytes(), mimetype = "multipart/x-mixed-replace; boundary=frame");
 		elif "snapshot" in request.args or "jpg" in request.args:
 			response = flask.make_response(self._snapshot_as_bytes());
 			response.headers["Content-Type"] = "image/jpg";
