@@ -46,7 +46,7 @@ class CameraStreamPlugin(octoprint.plugin.StartupPlugin,
 			response.headers["Reload"] = 1 / self.fps;
 		return response;
 
-	def is_blueprint_csrf_protected():
+	def is_blueprint_csrf_protected(self):
 		return True;
 				
 	def on_after_startup(self):
