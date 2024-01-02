@@ -26,10 +26,12 @@ class CameraStreamPlugin(octoprint.plugin.StartupPlugin,
 		return buffer.tobytes();
 
 	def _stream_as_bytes(self):
-		self._logger.info("Stream shot");
-		yield b"--frame\r\nContent-Type: image/jpeg\r\n\r\n";
-		yield self._snapshot_as_bytes(self);
-		yield b"\r\n";
+		while(True):
+			self._logger.info("Stream shot");
+			yield b"--frame\r\nContent-Type: image/jpeg\r\n\r\n"
+			yield self._snapshot_as_bytes(self);
+			yield b"\r\n";
+			time.sleep(1.0 / fps);
 
 	def on_after_startup(self):
 		self._logger.info("Configuring camera stream");
@@ -50,8 +52,8 @@ class CameraStreamPlugin(octoprint.plugin.StartupPlugin,
 		self._logger.info(request.args);
 		if "mjpg" in request.args or "stream" in request.args:	
 			response = flask.Response(
-				flask.stream_with_context(self._stream_as_bytes()),
-				#mimetype = "multipart/x-mixed-replace; boundary=frame"
+				self._stream_as_bytes(),
+				mimetype = "multipart/x-mixed-replace; boundary=--frame"
 			)
 		elif "snapshot" in request.args or "jpg" in request.args:
 			response = flask.make_response(self._snapshot_as_bytes());
