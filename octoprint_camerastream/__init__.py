@@ -61,7 +61,7 @@ class CameraStreamPlugin(octoprint.plugin.StartupPlugin,
 	def take_webcam_snapshot(self):
 		return self._snapshot_as_bytes();
 
-	def gut_update_information(self):
+	def get_update_information(self):
 		return dict(
 			camerastream = dict(
 				displayName = f"{self._plugin_name} Plugin",
