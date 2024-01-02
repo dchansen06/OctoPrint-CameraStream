@@ -18,7 +18,7 @@ plugin_version = "0.0.1"
 
 # The plugin's description. Can be overwritten within OctoPrint's internal data via __plugin_description__ in the plugin
 # module
-plugin_description = """TODO"""
+plugin_description = "Attempt to use OpenCV or PiCamera2 to return a snapshot and stream"
 
 # The plugin's author. Can be overwritten within OctoPrint's internal data via __plugin_author__ in the plugin module
 plugin_author = "Daniel Hansen"
@@ -27,13 +27,15 @@ plugin_author = "Daniel Hansen"
 plugin_author_email = "dchansen06@gmail.com"
 
 # The plugin's homepage URL. Can be overwritten within OctoPrint's internal data via __plugin_url__ in the plugin module
-plugin_url = "TODO"
+plugin_url = "https://github.com/dchansen06/OctoPrint-CameraStream"
 
 # The plugin's license. Can be overwritten within OctoPrint's internal data via __plugin_license__ in the plugin module
 plugin_license = "AGPLv3"
 
 # Any additional requirements besides OctoPrint should be listed here
-plugin_requires = []
+plugin_requires = [
+    "cv2",
+]
 
 ### --------------------------------------------------------------------------------------------------------------------
 ### More advanced options that you usually shouldn't have to touch follow after this point
