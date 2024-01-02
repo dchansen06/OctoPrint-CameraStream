@@ -35,15 +35,13 @@ class CameraStreamPlugin(octoprint.plugin.StartupPlugin,
 	@octoprint.plugin.BlueprintPlugin.route("/stream", methods = ["GET"])
 	def stream_handler(self):
 		response = flask.Response(self._stream_as_bytes(), mimetype="multipart/x-mixed-replace; boundary=frame");
-		return response
+		return response;
 
 	@octoprint.plugin.BlueprintPlugin.route("/snapshot", methods = ["GET"])
 	def snapshot_handler(self):
-		self._logger.info(request.args);
+		self._logger.info("Handling snapshot");
 		response = flask.make_response(self._snapshot_as_bytes());
 		response.headers["Content-Type"] = "image/jpg";
-		if "reload" in request.args:
-			response.headers["Reload"] = 1 / self.fps;
 		return response;
 
 	def is_blueprint_csrf_protected(self):
