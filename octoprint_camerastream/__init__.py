@@ -101,6 +101,18 @@ class CameraStreamPlugin(octoprint.plugin.StartupPlugin,
 				"repo": "OctoPrint-CameraStream",
 				"current": self._plugin_version,
 				"pip": "https://github.com/dchansen06/OctoPrint-CameraStream/archive/{target_version}.zip",
+				"stable_branch": {
+					"name": "Stable",
+					"branch": "main",
+					"comittish": ["main"],
+				}
+				"prerelease_branches": [
+					{
+						"name": "Development",
+						"branch": "dev",
+						"comittish": ["dev", "main"],
+					},
+				]
 			}
 		}
 
