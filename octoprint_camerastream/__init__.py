@@ -23,10 +23,9 @@ class CameraStreamPlugin(octoprint.plugin.StartupPlugin,
 		)
 
 	def get_template_configs(self):
-		return [{
-			"type": "webcam",
-			"name": "Camera Stream",
-			"template": "camerastream_webcam.jinja2",
+		return [
+			dict(type="webcam", name="Camera Stream", template="camerastream_webcam.jinja2", custom_bindings=False);
+			dict(type="settings", name="Camera Stream", template="camerastream_settings.jinja2", custom_bindings="False");
 		}]
 
 	def get_settings_defaults(self):
