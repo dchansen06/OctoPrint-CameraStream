@@ -54,10 +54,6 @@ class CameraStreamPlugin(octoprint.plugin.StartupPlugin,
 		if not self.vid.isOpened():
 			self._logger.info("Never opened");
 
-		self.CameraID = self._settings.get(["cameraID"]);
-		self.fps = self._settings.get(["fps"]);
-		self.vid = cv2.VideoCapture(self.CameraID);
-
 	def get_webcam_configurations(self):
 		return [
 			Webcam(
