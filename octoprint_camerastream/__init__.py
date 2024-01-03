@@ -24,14 +24,14 @@ class CameraStreamPlugin(octoprint.plugin.StartupPlugin,
 			return bytes("Cannot convert", "utf-8");
 		return buffer.tobytes();
 	
-	@octoprint.plugin.BlueprintPlugin.route("/stream", methods = ["GET"])
+	@octoprint.plugin.BlueprintPlugin.route("/stream.jpg", methods = ["GET"])
 	def stream_handler(self):
 		response = flask.make_response(self._snapshot_as_bytes());
 		response.headers["Content-Type"] = "image/jpg";
 		response.headers["Refresh"] = 1.0 / self.fps;
 		return response;
 
-	@octoprint.plugin.BlueprintPlugin.route("/snapshot", methods = ["GET"])
+	@octoprint.plugin.BlueprintPlugin.route("/snapshot.jpg", methods = ["GET"])
 	def snapshot_handler(self):
 		self._logger.info("Handling snapshot");
 		response = flask.make_response(self._snapshot_as_bytes());
