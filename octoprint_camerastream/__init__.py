@@ -42,11 +42,11 @@ class CameraStreamPlugin(octoprint.plugin.StartupPlugin,
 			return bytes("Cannot convert", "utf-8");
 		return buffer.tobytes();
 
-	def get_api_commands(self):
-		return dict();
+#	def get_api_commands(self):
+#		return dict();
 
-	def on_api_command(self, command, data):
-		self._logger.info("Do nothing");
+#	def on_api_command(self, command, data):
+#		self._logger.info("Do nothing");
 
 	def on_api_get(self, request):
 		self._logger.info("Handling snapshot");
