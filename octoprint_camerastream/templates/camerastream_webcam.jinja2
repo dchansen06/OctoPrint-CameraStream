@@ -9,7 +9,7 @@ function camerastreamReload(){
 }
 
 function camerastreamStart() {
-	setInterval(camerastreamReload(), 1000.0 / camerastreamImage.getAttribute(fps))
+	setInterval(camerastreamReload(), 1000.0 / camerastreamImage.getAttribute("fps"))
 }
 
 window.addEventListener("load", camerastreamStart, options="once");
