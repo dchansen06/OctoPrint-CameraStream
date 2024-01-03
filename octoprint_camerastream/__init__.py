@@ -17,14 +17,14 @@ class CameraStreamPlugin(octoprint.plugin.StartupPlugin,
 
 	def get_settings_defaults(self):
 		return dict(
-			FPS=1,
+			fps=1,
 			cameraID=0,
 		);
 
 	def on_settings_save(self, data):
-		vid.release();
+		self.vid.release();
 		cv2.destroyAllWindows();
-		vid = cv2.VideoCapture(
+		self.vid = cv2.VideoCapture(self.CameraID);
 	
 	def _snapshot_as_bytes(self):
 		self._logger.info("Snapshotting");
@@ -66,9 +66,9 @@ class CameraStreamPlugin(octoprint.plugin.StartupPlugin,
 		if not self.vid.isOpened():
 			self._logger.info("Never opened");
 
-		CameraID = self._settings.get(["cameraID"]);
-		fps = self._settings.get(["FPS"]);
-		vid = cv2.VideoCapture(self.CameraID);
+		self.CameraID = self._settings.get(["cameraID"]);
+		self.fps = self._settings.get(["fps"]);
+		self.vid = cv2.VideoCapture(self.CameraID);
 
 	def get_webcam_configurations(self):
 		return [
