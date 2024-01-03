@@ -113,5 +113,5 @@ __plugin_name__ = "Camera Stream";
 __plugin_pythoncompat__ = ">=3.7,<4";
 __plugin_implementation__ = CameraStreamPlugin();
 __plugin_hooks = {
-	"octoprint.plugin.softwareupdate.check_config": get_update_information
+	"octoprint.plugin.softwareupdate.check_config": __plugin_implementation__.get_update_information
 }
