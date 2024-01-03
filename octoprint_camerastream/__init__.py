@@ -16,6 +16,13 @@ class CameraStreamPlugin(octoprint.plugin.StartupPlugin,
 	vid = cv2.VideoCapture(CameraID);
 	fps = 1;
 
+	def get_template_configs(self):
+		return [{
+			"type": "webcam",
+			"name": "Camera Stream",
+			"template": "camerastream_webcam.jinja2",
+		}]
+
 	def get_settings_defaults(self):
 		return dict(
 			cameraID=0,
