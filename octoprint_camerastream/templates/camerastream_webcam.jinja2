@@ -9,7 +9,5 @@ function camerastreamReload(){
 	}
 }
 
-window.addEventListener('offline', () => console.log('Became offline'));
-
 setTimeout(function(){setInterval(camerastreamReload, 1000.0 / camerastreamImage.getAttribute("fps"))}, 15000);
 </script>
