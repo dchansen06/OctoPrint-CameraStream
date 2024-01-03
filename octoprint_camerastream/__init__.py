@@ -12,7 +12,7 @@ class CameraStreamPlugin(octoprint.plugin.StartupPlugin,
 			octoprint.plugin.SettingsPlugin):
 
 	CameraID = 0;
-	vid = cv2.VideoCapture(self.CameraID);
+	vid = cv2.VideoCapture(CameraID);
 	fps = 1;
 
 	def get_settings_defaults(self):
