@@ -7,7 +7,7 @@ DO NOT USE - WIP STILL, Attempt to use OpenCV or PiCamera2 to return a snapshot 
 Install via the bundled [Plugin Manager](https://docs.octoprint.org/en/master/bundledplugins/pluginmanager.html)
 or manually using this URL:
 
-    https://github.com/dchansen06/OctoPrint-CameraStream/archive/master.zip
+    https://github.com/dchansen06/OctoPrint-CameraStream/archive/main.zip
 
 **TODO:** Make sure your camera works? WIP DO NOT USE (Describe how to install your plugin, if more needs to be done than just installing it via pip or through the plugin manager.)
 
