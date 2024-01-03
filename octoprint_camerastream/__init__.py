@@ -97,21 +97,21 @@ class CameraStreamPlugin(octoprint.plugin.StartupPlugin,
 		return self._snapshot_as_bytes();
 
 	def get_update_information(self):
-		return {
-			"camerastream": {
-				"displayName": "Camera Stream Plugin",
-				"displayVersion": self._plugin_version,
-				"type": "github_release",
-				"user": "dchansen06",
-				"repo": "OctoPrint-CameraStream",
-				"current": self._plugin_version,
-				"pip": "https://github.com/dchansen06/OctoPrint-CameraStream/archive/{target_version}.zip",
-			}
-		}
+		return dict(
+			camerastream = dict(
+				displayName = self._plugin_name,
+				displayVersion = self._plugin_version,
+				type = "github_release",
+				user = "dchansen06",
+				repo = "OctoPrint-CameraStream",
+				current = self._plugin_version,
+				pip = "https://github.com/dchansen06/OctoPrint-CameraStream/archive/{target_version}.zip",
+			)
+		)
 
 __plugin_name__ = "Camera Stream";
 __plugin_pythoncompat__ = ">=3.7,<4";
 __plugin_implementation__ = CameraStreamPlugin();
 __plugin_hooks = {
-	"octoprint.plugin.softwareupdate.check_config": __plugin_implementation__.get_update_information
+	"octoprint.plugin.softwareupdate.check_config": get_update_information
 }
