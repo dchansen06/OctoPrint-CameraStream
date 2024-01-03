@@ -57,6 +57,8 @@ class CameraStreamPlugin(octoprint.plugin.StartupPlugin,
 		
 		if "stream" in request.args or "mjpg" in request.args:
 			response.headers["Refresh"] = 1.0 / self.fps;
+		if "fps" in request.args or "FPS" in request.args:
+			response = flask.make_response(self.fps);
 		
 		return response;
 	
