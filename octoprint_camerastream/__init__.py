@@ -60,8 +60,8 @@ class CameraStreamPlugin(octoprint.plugin.StartupPlugin,
 				canSnapshot = True,
 				snapshot = "Internal Camera Stream",
 				compat = WebcamCompatibility(
-					snapshot = "/plugin/camerastream/snapshot",
-					stream = "/plugin/camerastream/stream",
+					snapshot = "/api/plugin/camerastream?snapshot",
+					stream = "/api/plugin/camerastream?stream",
 				)
 			)
 		]
