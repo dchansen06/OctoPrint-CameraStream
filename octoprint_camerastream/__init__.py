@@ -16,6 +16,12 @@ class CameraStreamPlugin(octoprint.plugin.StartupPlugin,
 	vid = cv2.VideoCapture(CameraID);
 	fps = 1;
 
+	def get_template_vars(self):
+		return dict(
+			self.cameraID = self._settings.get(["cameraID"]),
+			self.fps = self._settings.get(["fps"]),
+		)
+
 	def get_template_configs(self):
 		return [{
 			"type": "webcam",
