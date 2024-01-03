@@ -17,8 +17,8 @@ class CameraStreamPlugin(octoprint.plugin.StartupPlugin,
 
 	def get_settings_defaults(self):
 		return dict(
-			FPS=1;
-			cameraID=0;
+			FPS=1,
+			cameraID=0,
 		);
 
 	def on_settings_save(self, data):
