@@ -18,8 +18,8 @@ class CameraStreamPlugin(octoprint.plugin.StartupPlugin,
 
 	def get_template_vars(self):
 		return dict(
-			self.cameraID = self._settings.get(["cameraID"]),
-			self.fps = self._settings.get(["fps"]),
+			cameraID = self._settings.get(["cameraID"]),
+			fps = self._settings.get(["fps"]),
 		)
 
 	def get_template_configs(self):
