@@ -8,7 +8,8 @@ import time;
 class CameraStreamPlugin(octoprint.plugin.StartupPlugin,
 			octoprint.plugin.SimpleApiPlugin,
 			octoprint.plugin.WebcamProviderPlugin,
-			octoprint.plugin.RestartNeedingPlugin):
+			octoprint.plugin.RestartNeedingPlugin,
+			octoprint.plugin.TemplatePlugin):
 
 	CameraID = 0;
 	vid = cv2.VideoCapture(CameraID);
