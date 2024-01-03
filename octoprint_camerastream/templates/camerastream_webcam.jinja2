@@ -1,10 +1,16 @@
 <img id="camerastream-image" src="/api/plugin/camerastream?reload" data-bind="attr: {fps: settings.settings.plugins.camerastream.fps}" style="width: 100%; height: 100%; border: 1px solid #808080">
 <script>
-var camerastreamImage = document.getElementById("camerastream-image");
-setInterval(function(){
-  if (camerastreamImage.className.includes("active") && document.getElementById("control").className.includes("active"))
-  {
-    camerastreamImage.src = camerastreamImage.src;
-  }
-}, 1000.0 / camerastreamImage.getAttribute(fps))
+function camerastreamReload(){
+	var camerastreamImage = document.getElementById("camerastream-image");
+	if (camerastreamImage.className.includes("active") && document.getElementById("control").className.includes("active"))
+	{
+		camerastreamImage.src = camerastreamImage.src;
+	}
+}
+
+function camerastreamStart() {
+	setInterval(camerastreamReload(), 1000.0 / camerastreamImage.getAttribute(fps))
+}
+
+setTimeout(camerastreamStart(), 1000)
 </script>
