@@ -9,5 +9,5 @@ function camerastreamReload(){
 	}
 }
 
-window.addEventListener("load", setInterval(camerastreamReload, 1000.0 / camerastreamImage.getAttribute("fps")), options="once");
+window.addEventListener("load", function(){setInterval(camerastreamReload, 1000.0 / camerastreamImage.getAttribute("fps"))}, options="once");
 </script>
