@@ -3,13 +3,13 @@
 var camerastreamImage = document.getElementById("camerastream-image");
 
 function camerastreamReload(){
-	OctoPrint.util.testUrl(camerastreamImage.src).done(function(response){
- 		if (response.result && document.getElementById("control").className.includes("active"))
-		{
-			camerastreamImage.src = camerastreamImage.src;
-		}
+	if (document.getElementById("control").className.includes("active"))
+	{
+		camerastreamImage.src = camerastreamImage.src;
 	}
 }
+
+window.addEventListener('offline', () => console.log('Became offline'));
 
 setTimeout(function(){setInterval(camerastreamReload, 1000.0 / camerastreamImage.getAttribute("fps"))}, 15000);
 </script>
