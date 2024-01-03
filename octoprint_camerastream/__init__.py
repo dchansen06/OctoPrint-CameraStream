@@ -60,10 +60,8 @@ class CameraStreamPlugin(octoprint.plugin.StartupPlugin,
 		response.headers["Pragma"] = "no-cache";
 		response.headers["Cache-Control"] = "max-age=0, must-revalidate, no-store";
 		
-		if "stream" in request.args or "mjpg" in request.args:
+		if "reload" in request.args or "stream" in request.args:
 			response.headers["Refresh"] = 1.0 / self.fps;
-		if "fps" in request.args or "FPS" in request.args:
-			response = flask.make_response(self.fps);
 		
 		return response;
 	
