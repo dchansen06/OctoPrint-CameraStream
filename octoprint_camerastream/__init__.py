@@ -6,11 +6,12 @@ import multiprocessing;
 import time;
 
 class CameraStreamPlugin(octoprint.plugin.StartupPlugin,
-			octoprint.plugin.BlueprintPlugin,
+			octoprint.plugin.SimpleApiPlugin,
 			octoprint.plugin.WebcamProviderPlugin):
 
 	vid = cv2.VideoCapture(0);
 	fps = 1;
+				
 	def _snapshot_as_bytes(self):
 		self._logger.info("Snapshotting");
 		if not self.vid.isOpened():
@@ -23,24 +24,25 @@ class CameraStreamPlugin(octoprint.plugin.StartupPlugin,
 		if not ret:
 			return bytes("Cannot convert", "utf-8");
 		return buffer.tobytes();
-	
-	@octoprint.plugin.BlueprintPlugin.route("/stream.jpg", methods = ["GET"])
-	def stream_handler(self):
-		response = flask.make_response(self._snapshot_as_bytes());
-		response.headers["Content-Type"] = "image/jpg";
-		response.headers["Refresh"] = 1.0 / self.fps;
-		return response;
 
-	@octoprint.plugin.BlueprintPlugin.route("/snapshot.jpg", methods = ["GET"])
-	def snapshot_handler(self):
+	def get_api_commands(self):
+		return dict();
+
+	def on_api_command(self, command, data):
+		self._logger.info("Do nothing");
+
+	def on_api_get(self, request):
 		self._logger.info("Handling snapshot");
 		response = flask.make_response(self._snapshot_as_bytes());
 		response.headers["Content-Type"] = "image/jpg";
+		response.headers["Pragma"] = "no-cache";
+		response.headers["Cache-Control"] = "max-age=0, must-revalidate, no-store";
+		
+		if "stream" in request.args or "mjpg" in request.args:
+			response.headers["Refresh"] = 1.0 / self.fps;
+		
 		return response;
-
-	def is_blueprint_csrf_protected(self):
-		return True;
-				
+	
 	def on_after_startup(self):
 		self._logger.info("Configuring camera stream");
 		self.vid.set(cv2.CAP_PROP_BUFFERSIZE, 1);
