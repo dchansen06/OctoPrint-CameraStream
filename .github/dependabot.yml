@@ -13,3 +13,7 @@ updates:
       - "dchansen06"
     commit-message:
       prefix: "pip"
+    groups:
+      python-packages:
+        patterns:
+          - "*"
